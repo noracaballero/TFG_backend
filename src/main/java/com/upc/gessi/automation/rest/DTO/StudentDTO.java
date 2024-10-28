@@ -12,8 +12,12 @@ public class StudentDTO  {
     private String username_taiga;
     private String username_sheets;
 
-    @Autowired
+
     private StudentRepository StudentRep;
+
+    public StudentDTO() {
+
+    }
 
     public StudentDTO(String name, Integer project, String username_github,String username_taiga,String username_sheets){
         this.name= name;
@@ -22,12 +26,15 @@ public class StudentDTO  {
         this.username_taiga= username_taiga;
         this.username_sheets= username_sheets;
     }
-    public StudentDTO(String name, String username_github,String username_taiga,String username_sheets){
+    public StudentDTO(Integer id,String name, String username_github,String username_taiga,String username_sheets){
+        this.id = id;
         this.name= name;
         this.username_github= username_github;
         this.username_taiga= username_taiga;
         this.username_sheets= username_sheets;
     }
+
+    public Integer getId(){ return id;}
 
     public String getName(){
         return name;

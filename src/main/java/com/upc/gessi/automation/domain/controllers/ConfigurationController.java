@@ -62,23 +62,23 @@ public class ConfigurationController {
 
             if (github) {
                 String github_name = projectController.getIdGithub(name, subject);
-                connectController.config_GT_properties(name, subject, "github", github_name);
+                connectController.config_GTS_properties(name, subject, "github", github_name);
                 connectController.config_mongo_properties(name, subject, "github");
                 connectController.configure_script(name, subject, "github");
             }
             if (taiga) {
                 String taiga_name = projectController.getIdTaiga(name, subject);
-                connectController.config_GT_properties(name, subject, "taiga", taiga_name);
+                connectController.config_GTS_properties(name, subject, "taiga", taiga_name);
                 connectController.config_mongo_properties(name, subject, "taiga");
                 connectController.configure_script(name, subject, "taiga");
             }
             if (sheets) {
                 String sheets_name = projectController.getIdSheets(name, subject);
-                connectController.config_GT_properties(name, subject, "sheets", sheets_name);
+                connectController.config_GTS_properties(name, subject, "sheets", sheets_name);
                 connectController.config_mongo_properties(name, subject, "sheets");
                 connectController.configure_script(name, subject, "sheets");
             }
-            projectController.setConfig(name, subject);
+            //projectController.setConfig(name, subject);
         }
 
     }
@@ -141,6 +141,7 @@ public class ConfigurationController {
                     .build();
 
             Response responseproject = client.newCall(importProject).execute();
+            System.out.print("GET IMPORT PROJECTS");
             System.out.println(responseproject.body().string());
 
             Request importMetrics = new Request.Builder()
@@ -148,6 +149,7 @@ public class ConfigurationController {
                     .build();
 
             Response  responseMetrics= client.newCall(importMetrics).execute();
+            System.out.print("GET IMPORT METRICS");
             System.out.println(responseMetrics.body().string());
 
             Request importFactors = new Request.Builder()
@@ -155,6 +157,7 @@ public class ConfigurationController {
                     .build();
 
             Response  responseFactors= client.newCall(importFactors).execute();
+            System.out.print("GET IMPORT FACTORS");
             System.out.println(responseFactors.body().string());
 
             Request importStrategic = new Request.Builder()
@@ -162,6 +165,7 @@ public class ConfigurationController {
                     .build();
 
             Response  responseStrategic= client.newCall(importStrategic).execute();
+            System.out.print("GET IMPORT INDICATORS");
             System.out.println(responseStrategic.body().string());
 
 

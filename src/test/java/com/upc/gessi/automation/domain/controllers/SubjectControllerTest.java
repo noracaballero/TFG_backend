@@ -28,7 +28,7 @@ public class SubjectControllerTest {
 
     @Test
     void getAll(){
-        Subject s = new Subject("test",true,"123",true,false);
+        Subject s = new Subject("test",true,"123",true,false,"user");
         List<Subject> subjects = new ArrayList<>();
         subjects.add(s);
         Mockito.when(subjectRepository.findAll()).thenReturn(subjects);
@@ -38,8 +38,8 @@ public class SubjectControllerTest {
 
     @Test
     void getToken(){
-        SubjectDTO so = new SubjectDTO("test",true,"123",true,false);
-        Subject s = new Subject("test",true,"123",true,false);
+        SubjectDTO so = new SubjectDTO("test",true,"123",true,false,"user");
+        Subject s = new Subject("test",true,"123",true,false,"user");
         Mockito.when(subjectRepository.save(any(Subject.class))).thenReturn(s);
         Mockito.when(subjectRepository.findByName(eq("test"))).thenReturn(s);
 
@@ -50,8 +50,8 @@ public class SubjectControllerTest {
 
     @Test
     void getGithub(){
-        SubjectDTO so = new SubjectDTO("test",true,"123",true,false);
-        Subject s = new Subject("test",true,"123",true,false);
+        SubjectDTO so = new SubjectDTO("test",true,"123",true,false, "test");
+        Subject s = new Subject("test",true,"123",true,false,"test");
         Mockito.when(subjectRepository.save(any(Subject.class))).thenReturn(s);
         Mockito.when(subjectRepository.findByName(eq("test"))).thenReturn(s);
 
@@ -62,8 +62,8 @@ public class SubjectControllerTest {
 
     @Test
     void getTaiga(){
-        SubjectDTO so = new SubjectDTO("test",true,"123",true,false);
-        Subject s = new Subject("test",true,"123",true,false);
+        SubjectDTO so = new SubjectDTO("test",true,"123",true,false,"test");
+        Subject s = new Subject("test",true,"123",true,false,"test");
         Mockito.when(subjectRepository.save(any(Subject.class))).thenReturn(s);
         Mockito.when(subjectRepository.findByName(eq("test"))).thenReturn(s);
 
@@ -74,8 +74,8 @@ public class SubjectControllerTest {
 
     @Test
     void getSheets(){
-        SubjectDTO so = new SubjectDTO("test",true,"123",true,false);
-        Subject s = new Subject("test",true,"123",true,false);
+        SubjectDTO so = new SubjectDTO("test",true,"123",true,false,"user");
+        Subject s = new Subject("test",true,"123",true,false,"user");
         Mockito.when(subjectRepository.save(any(Subject.class))).thenReturn(s);
         Mockito.when(subjectRepository.findByName(eq("test"))).thenReturn(s);
 

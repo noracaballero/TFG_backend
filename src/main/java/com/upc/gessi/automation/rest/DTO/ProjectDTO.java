@@ -11,6 +11,7 @@ public class ProjectDTO {
     private String urlSheets;
 
     private String config_id;
+    private Boolean config;
 
     public ProjectDTO(){};
 
@@ -22,13 +23,15 @@ public class ProjectDTO {
         this.urlTaiga=urlTaiga;
         this.urlSheets=urlSheets;
     }
-    public ProjectDTO(Integer Id,String name, String subject, String urlGithub, String urlTaiga, String urlSheets){
+    public ProjectDTO(Integer Id,String name, String subject, String urlGithub, String urlTaiga, String urlSheets, Boolean config){
         this.Id=Id;
         this.name=name;
         this.subject=subject;
         this.urlGithub=urlGithub;
         this.urlTaiga=urlTaiga;
         this.urlSheets=urlSheets;
+        this.config = config;
+
     }
 
     public Integer getId(){
@@ -53,6 +56,8 @@ public class ProjectDTO {
     public String getUrlSheets(){
         return urlSheets;
     }
+
+    public Boolean getConfig(){return config;}
 
 
 }

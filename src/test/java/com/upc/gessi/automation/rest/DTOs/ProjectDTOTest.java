@@ -12,7 +12,7 @@ public class ProjectDTOTest {
 
     @BeforeEach
     void setUp(){
-        projectDTO = new ProjectDTO(1,"test","subject","url_github","url_taiga","url_sheets");
+        projectDTO = new ProjectDTO(1,"test","subject","url_github","url_taiga","url_sheets",true);
     }
 
     @Test

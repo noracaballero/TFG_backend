@@ -5,6 +5,7 @@ import com.upc.gessi.automation.domain.controllers.SubjectController;
 import com.upc.gessi.automation.domain.models.Subject;
 import com.upc.gessi.automation.rest.DTO.ProjectDTO;
 
+import com.upc.gessi.automation.rest.DTO.StudentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,6 @@ public class ProjectRestController {
     public ProjectDTO getProjectId(@RequestParam(name = "name") String name ,@RequestParam(name = "subject") String subject){
         return projectController.getProject(name,subject);
     }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void createProject(@RequestBody List<ProjectDTO> projectRequests){
@@ -64,6 +64,11 @@ public class ProjectRestController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+    @PutMapping(value = "/{name}")
+    public void updateProject(@PathVariable String name, @RequestBody ProjectDTO projectDTO){
+        System.out.print(projectDTO);
+        projectController.updatePrj(projectDTO);
     }
 
 }

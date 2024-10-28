@@ -2,6 +2,7 @@ package com.upc.gessi.automation.domain.controllers;
 
 import com.google.gson.*;
 import com.upc.gessi.automation.domain.models.Factor;
+import com.upc.gessi.automation.domain.models.Project;
 import com.upc.gessi.automation.domain.respositories.FactorRepository;
 import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class FactorController {
     @Autowired
     ProjectController projectController;
 
-    public Boolean existsFactor(String project,String name){
+    /*public Boolean existsFactor(String project,String name){
         List<Factor> factors = factorRepository.findAllByProject(project);
         if(factors.size() == 0) return false;
         else{
@@ -38,9 +39,13 @@ public class FactorController {
             }
         }
         return false;
-    }
+    }*/
 
-    public void createFactors(String project,Integer num_students,Boolean Sheets){
+    public void createFactors(String project){
+        Project p = projectController.projectRep.findByName(project);
+        Integer num_students = p.getNum_students();
+        Boolean Sheets = false;
+
 
         if(!existsFactor(project,"commitsmanagement")) {
             //Commits Managment
@@ -112,7 +117,7 @@ public class FactorController {
     public void postFactor(String project){
         Integer num = projectController.getNumStudents(project);
         System.out.println("REAL" +num);
-        createFactors(project,4,false);
+        //createFactors(project,num,false);
         System.out.println("ENTRA_POST_FACTOR");
         List<Factor> factors= factorRepository.findAllByProject(project);
         for(Factor f : factors){
@@ -151,6 +156,7 @@ public class FactorController {
                         .build();
 
                 Response postResponse = client.newCall(postCategory).execute();
+                System.out.println("POSTFACTOR_LD");
                 System.out.println(postResponse.body().string());
 
             } catch (Exception e) {
@@ -190,8 +196,7 @@ public class FactorController {
         }
     }
 
-    public Boolean existsFactor(String category){
-        System.out.print("entra exists  "+category);
+    public boolean existsFactor(String project,String factor){
         OkHttpClient client = new OkHttpClient();
         HttpClient httpClient = HttpClient.newHttpClient();
         Gson gson = new Gson();
@@ -199,26 +204,31 @@ public class FactorController {
 
         try {
             Request getRequest = new Request.Builder()
-                    .url(new URL("http://host.docker.internal:8888/api/factors/categories?name="+category))
+                    .url(new URL("http://host.docker.internal:8888/api/qualityFactors?prj="+project))
                     .build();
 
             Response getResponse = client.newCall(getRequest).execute();
             if (getResponse.isSuccessful() ) {
-                String data = getResponse.body().string();
-                System.out.print(data);
-                if (data != null && !data.equals("[]")) {
-                    return true;
+
+                ResponseBody data = getResponse.body();
+                String dataString = data.string();
+                JsonArray factors = JsonParser.parseString(dataString).getAsJsonArray();
+                for(JsonElement e : factors){
+                    JsonObject obj = e.getAsJsonObject();
+                    if(obj.has(factor)){
+                        return true;
+                    }
                 }
             }
             else {
                 System.out.print("AAAAAAAAAAAAAAAAAA");
             }
-            return found;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return found;
     }
 
     public void createFactorCategory(String category){

@@ -36,6 +36,10 @@ public class Project implements Serializable {
     @Column(name= "config_id")
     private Integer config_id;
 
+    @Column(name = "config")
+    private Boolean config;
+
+
 
 
 
@@ -65,11 +69,21 @@ public class Project implements Serializable {
     public String getURL_github(){
         return URL_github;
     }
+
+    public void setURL_github(String git){ this.URL_github = git;}
     public String getURL_taiga(){
         return URL_taiga;
     }
+    public void setURL_taiga(String taiga){ this.URL_taiga = taiga;}
     public String getURL_sheets(){
         return URL_sheets;
+    }
+    public void setURL_sheets(String sheets){ this.URL_sheets = sheets;}
+
+    public Boolean getConfig(){return config;}
+
+    public void setConfig(Boolean status){
+        this.config = status;
     }
 
     public String getID_github(){

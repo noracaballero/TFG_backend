@@ -23,6 +23,9 @@ public class ConfigurationRestController {
     MetricController metricController;
 
     @Autowired
+    ProjectController projectController;
+
+    @Autowired
     FactorController factorController;
     @Autowired
     StrategicIndicatorController strategicIndicatorController;
@@ -39,14 +42,16 @@ public class ConfigurationRestController {
     //public Boolean getconfigProject(@RequestParam(name="name") String name, @RequestParam(name= "subject") String subject){
     public List<String> getconfigProject(@RequestBody List<Map<String,String>> parameters) throws IOException, InterruptedException {
         List<String> projects = new ArrayList<>();
+        String name = null;
         for (Map<String, String> project : parameters) {
-            String name = project.get("name");
+            name = project.get("name");
             String subject = project.get("subject");
             System.out.print(name);
             System.out.print(subject);
 
-            configurationController.configure_connect(name,subject);
-            configurationController.configure_qreval(name,subject);
+            configurationController.configure_connect(name, subject);
+            configurationController.configure_qreval(name, subject);
+
 
             projects.add(name);
             /*if (subjectController.getGithub(subject)) {
@@ -67,9 +72,17 @@ public class ConfigurationRestController {
 
 
         }
-        configurationController.createConfiguration(projects.size());
+        Integer id = configurationController.createConfiguration(projects.size());
+        projectController.putconfig(name, id);
         return projects;
 
+    }
+
+    @PostMapping(value="/finish")
+    public void finish(@RequestBody List<String> projects){
+        for(String p : projects){
+            projectController.finishConfig(p);
+        }
     }
 
     //@GetMapping(value = "/")
@@ -93,6 +106,7 @@ public class ConfigurationRestController {
 
     }*/
 
+
     @GetMapping(value = "/imports")
     public Boolean getImports(){
         return configurationController.importData();
@@ -108,18 +122,8 @@ public class ConfigurationRestController {
         metricController.addCategoryMetric(project);
         System.out.print("AAADAKJDKHDKDJHjhg");
     }*/
-    @PostMapping(value = "/factors")
-    public void configFS(@RequestParam(name = "projects") String project){
-        System.out.println("POST_FACTOR");
-        factorController.postFactor(project);
-        System.out.print("aaaaaaaaaaaaaa");
-        System.out.println("POST_STRATEGIC");
-        strategicIndicatorController.create(project);
-    }
 
-    /*@Async
-    private void performAsyncOperation() {
-        // Tu lógica aquí
-    }*/
+
+
 
 }

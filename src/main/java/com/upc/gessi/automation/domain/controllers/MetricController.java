@@ -118,7 +118,6 @@ public class MetricController {
 
     public void addCategoryMetric(String project) {
         Integer num_students = projectController.getNumStudents(project);
-        num_students=4;
         System.out.println(num_students);
         List<Metric> metrics = metricRepository.findAllByProject(project);
 
@@ -167,7 +166,7 @@ public class MetricController {
                     .build();
 
             Response putResponse = client.newCall(putCategory).execute();
-            System.out.println("AYUDAAAAAAAAAA");
+            System.out.println("PUTCATEGORY");
             System.out.println(putResponse.body().string());
 
         } catch (Exception e) {
@@ -190,6 +189,7 @@ public class MetricController {
                     .build();
 
             Response getResponse = client.newCall(getRequest).execute();
+            System.out.println("EXISTS_CATEGORY");
             if (getResponse.isSuccessful()) {
                 ResponseBody data = getResponse.body();
                 if (data != null) {
@@ -274,6 +274,7 @@ public class MetricController {
                     .build();
 
             Response putResponse = client.newCall(putCategory).execute();
+            System.out.println("CREATE METRIC CATEGORY");
             System.out.println(putResponse.body().string());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

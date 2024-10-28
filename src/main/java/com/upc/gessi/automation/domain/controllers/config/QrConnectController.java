@@ -163,7 +163,7 @@ public class QrConnectController {
         return true;
     }
 
-    public Boolean config_GT_properties(String name, String subject,String type,String id) {
+    public Boolean config_GTS_properties(String name, String subject,String type,String id) {
         String path = "home/connect/run/config/"+type+"_" + subject+"/"+type+".properties";
         //System.out.print(path);
 

@@ -1,7 +1,7 @@
 package com.upc.gessi.automation.domain.controllers;
 
 import com.google.gson.*;
-import com.upc.gessi.automation.domain.models.User;
+import com.upc.gessi.automation.domain.models.Users;
 import com.upc.gessi.automation.domain.respositories.UserRepository;
 import com.upc.gessi.automation.rest.DTO.UserDTO;
 import okhttp3.*;
@@ -23,15 +23,17 @@ public class UserController {
     UserRepository userRep;
 
     public UserDTO getUser(String project){
-        User u = userRep.findByUsername(project);
+        Users u = userRep.findByUsername(project);
+        System.out.println(u);
         UserDTO result = new UserDTO(u.getUsername(),u.getPassword());
+        System.out.println(result);
         return result;
     }
 
     public String createUser(String name){
         if(!userRep.existsByUsername(name)){
             String password = generatePassword();
-            User u = new User(name,password);
+            Users u = new Users(name,password);
             userRep.save(u);
             OkHttpClient client = new OkHttpClient();
             HttpClient httpClient = HttpClient.newHttpClient();
@@ -54,6 +56,7 @@ public class UserController {
                         .build();
 
                 Response postResponse = client.newCall(postCategory).execute();
+                System.out.println("CREATE_USER");
                 System.out.println(postResponse.body().string());
                 if(postResponse.isSuccessful()){
                     setExternalid();
@@ -83,7 +86,7 @@ public class UserController {
     }
 
     public void addUserProject(String name) {
-        User u = userRep.findByUsername(name);
+        Users u = userRep.findByUsername(name);
         Integer id_project = getIdProjectUser(name);
 
         String query = "INSERT INTO user_project values(" + u.getExternalId() + "," + id_project + ");";
@@ -128,7 +131,7 @@ public class UserController {
 
             while (resultSet.next()) {
                 if(userRep.existsByUsername(resultSet.getString("username"))){
-                    User u = userRep.findByUsername(resultSet.getString("username"));
+                    Users u = userRep.findByUsername(resultSet.getString("username"));
                     u.setExternalId(resultSet.getInt("id"));
                     userRep.save(u);
                 }

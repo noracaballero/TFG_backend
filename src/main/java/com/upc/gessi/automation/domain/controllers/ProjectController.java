@@ -32,7 +32,7 @@ public class ProjectController {
 
     public ProjectDTO getProject(String name, String subject){
         Project project = projectRep.findByNameAndSubject(name,subject);
-        ProjectDTO pDTO = new ProjectDTO(project.getId(), project.getName(),project.getSubject(),project.getURL_github(), project.getURL_taiga(), project.getURL_sheets());
+        ProjectDTO pDTO = new ProjectDTO(project.getId(), project.getName(),project.getSubject(),project.getURL_github(), project.getURL_taiga(), project.getURL_sheets(),project.getConfig());
         return pDTO;
     };
 
@@ -40,11 +40,17 @@ public class ProjectController {
         List<ProjectDTO> projects = new ArrayList<>();
         Iterable<Project> projectsit = projectRep.findAll();
         for(Project project : projectsit){
-            System.out.print("IDDDD "+project.getId());
-            ProjectDTO pDTO = new ProjectDTO(project.getId(), project.getName(),project.getSubject(),project.getURL_github(), project.getURL_taiga(), project.getURL_sheets());
+            System.out.print("IDDDD "+project.getConfig());
+            ProjectDTO pDTO = new ProjectDTO(project.getId(), project.getName(),project.getSubject(),project.getURL_github(), project.getURL_taiga(), project.getURL_sheets(),project.getConfig());
             projects.add(pDTO);
         }
         return projects;
+    }
+
+    public void finishConfig(String name){
+        Project p = projectRep.findByName(name);
+        p.setConfig(true);
+        projectRep.save(p);
     }
 
     public void createProject(ProjectDTO pDTO){
@@ -77,9 +83,10 @@ public class ProjectController {
         return project.getID_Sheets();
     }
 
-    public void setConfig(String name, String subject){
-        Project p = projectRep.findByNameAndSubject(name,subject);
-        p.setConfig_id(5);
+    public void setConfig(String name){
+        Project p = projectRep.findByName(name);
+        p.setConfig_id(100);
+        projectRep.save(p);
     }
 
     public void setNumStudents(Integer num,String name, String subject){
@@ -108,7 +115,21 @@ public class ProjectController {
         return null;
     }
 
-    private Integer getExternalId(String project){
+    public void updatePrj(ProjectDTO pDTO){
+        Project p =  projectRep.findByNameAndSubject(pDTO.getName(), pDTO.getSubject());
+        p.setURL_github(pDTO.getUrlGithub());
+        p.setURL_taiga(pDTO.getUrlTaiga());
+        p.setURL_sheets(pDTO.getUrlSheets());
+        projectRep.save(p);
+    }
+
+    public void putconfig(String name, Integer id){
+        Project p = projectRep.findByName(name);
+        p.setConfig_id(id);
+        projectRep.save(p);
+    }
+
+    public Integer getExternalId(String project){
         OkHttpClient client = new OkHttpClient();
         HttpClient httpClient = HttpClient.newHttpClient();
         Gson gson = new Gson();
@@ -185,6 +206,16 @@ public class ProjectController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Integer> getProjectsSubject(String subject){
+        List<Project> projects = projectRep.findAllBySubject(subject);
+        List<Integer> ids = new ArrayList<>();
+
+        for( Project p : projects){
+            ids.add(getExternalId(p.getName()));
+        }
+        return ids;
     }
 
 }

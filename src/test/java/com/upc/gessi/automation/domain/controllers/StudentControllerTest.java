@@ -44,7 +44,7 @@ public class StudentControllerTest {
 
     @Test
     void createStudentTest(){
-        StudentDTO sDTO = new StudentDTO("test"," ", " "," ");
+        StudentDTO sDTO = new StudentDTO(1,"test"," ", " "," ");
         studentController.createStudent(sDTO);
         verify(studentRep, times(1)).save(any());
     }

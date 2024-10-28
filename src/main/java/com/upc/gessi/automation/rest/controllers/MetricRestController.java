@@ -35,14 +35,15 @@ public class MetricRestController {
     public void configLD(@RequestBody List<String> projects){
         for(String p : projects) {
             System.out.println(p);
-        }
-            /*System.out.print("ADD_METRICS");
+            System.out.print("ADD_METRICS");
             metricController.addMetrics(p);
             System.out.print("SET_FACTOR");
             metricController.setFactorMetric(p);
             System.out.print("ADD_CATEGORY_METRIC");
             metricController.addCategoryMetric(p);
-            System.out.print("AAADAKJDKHDKDJHjhg");*/
+            System.out.print("AAADAKJDKHDKDJHjhg");
+        }
+
     }
 
 

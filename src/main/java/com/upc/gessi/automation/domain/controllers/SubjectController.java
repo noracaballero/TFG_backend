@@ -16,6 +16,9 @@ public class SubjectController {
     @Autowired
     private SubjectRepository subjectRepository;
 
+    @Autowired
+    ProjectController projectController;
+
     public List<Subject> getAll(){
         List<Subject> subjects_names = new ArrayList<>();
         Iterable<Subject> subjects =  subjectRepository.findAll();
@@ -26,7 +29,7 @@ public class SubjectController {
     }
 
     public void create(@NotNull SubjectDTO sub){
-        Subject s = new Subject(sub.getName(),sub.getGithub(),sub.getToken_github(),sub.getTaiga(),sub.getSheets());
+        Subject s = new Subject(sub.getName(),sub.getGithub(),sub.getToken_github(),sub.getTaiga(),sub.getSheets(),sub.getUsername());
         subjectRepository.save(s);
     }
 
@@ -46,6 +49,12 @@ public class SubjectController {
     public Boolean getSheets(String name){
         Subject sub = subjectRepository.findByName(name);
         return sub.getSheets();
+    }
+
+    public String getProjects(String subject){
+        List<Integer> proj = projectController.getProjectsSubject(subject);
+        System.out.println(proj.toString());
+        return proj.toString();
     }
 
 }

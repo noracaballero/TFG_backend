@@ -1,7 +1,6 @@
 package com.upc.gessi.automation.rest.controllers;
 
 import com.upc.gessi.automation.domain.controllers.UserController;
-import com.upc.gessi.automation.domain.models.User;
 import com.upc.gessi.automation.rest.DTO.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +18,7 @@ public class UserRestController {
     UserController userController;
 
     @GetMapping
-    public List<UserDTO> getUsers(@RequestBody List<String> projects){
+    public List<UserDTO> getUsers(@RequestParam List<String> projects){
         List<UserDTO> users = new ArrayList<>();
         for(String s : projects){
             UserDTO u = userController.getUser(s);
@@ -38,6 +37,7 @@ public class UserRestController {
             String pssw = userController.createUser(name);
             UserDTO newUser = new UserDTO(name,pssw);
             users.add(newUser);
+
 
         }
         return users;

@@ -40,21 +40,34 @@ public class Student implements Serializable {
     public Student() {
 
     }
-
+    public Integer getId() {return id;}
     public String getName() {
         return name;
     }
+
+    public void setName(String name){ this.name = name;}
 
     public String getUsername_github(){
         return username_github;
     }
 
+    public void setUsername_github(String username_github){
+        this.username_github = username_github;
+    }
+
     public String getUsername_taiga(){
         return username_taiga;
+    }
+    public void setUsername_taiga(String username_taiga){
+        this.username_taiga = username_taiga;
     }
 
     public String getUsername_sheets(){
         return username_sheets;
+    }
+
+    public void setUsername_sheets(String username_sheets){
+        this.username_sheets = username_sheets;
     }
 
     public Integer getProject() {

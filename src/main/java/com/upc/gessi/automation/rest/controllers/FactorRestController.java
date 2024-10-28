@@ -14,14 +14,16 @@ public class FactorRestController {
     @Autowired
     FactorController factorController;
 
-    @PostMapping(value = "/new")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createFactors(){
+    public void createFactors(@RequestBody List<String> projects){
         //factorController.createFactorCategory("Reversed Default");
-        factorController.createFactors("bravo11",4,false);
+        for(String p : projects) {
+            factorController.createFactors(p);
+        }
     }
 
-    @PostMapping
+    @PostMapping(value = "/LD")
     public void postFactors(@RequestBody List<String> projects){
         for(String project : projects) {
             factorController.postFactor(project);

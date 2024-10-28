@@ -56,7 +56,7 @@ public class StudentRestController {
             var id_project = projectController.getId(name,subject);
             System.out.print(id_project);
             System.out.print(members.size());
-            projectController.setNumStudents(members.size()+1,name,subject);
+            projectController.setNumStudents(members.size(),name,subject);
 
             for(Map<String,String> memberData: members){
                 StudentDTO student = new StudentDTO(memberData.get("name"),id_project,memberData.get("githubUsername"),memberData.get("taigaUsername"),memberData.get("sheetsUsername"));
@@ -64,39 +64,17 @@ public class StudentRestController {
                 //studentcontroller.putStudents(name,subject);
             }
         }
-
-
     }
-    @PutMapping
-    public void updateStudent(String project, String name, List<String> patata){
-
-    }
-
-    /*@PostMapping(value = "/student")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createStudent(StudentDTO studentRequest){
-        try{
-            String name = studentRequest.getName();
-            Integer project = studentRequest.getProject();
-            System.out.print(project);
-            String username_github = studentRequest.getUsername_github();
-            String username_taiga = studentRequest.getUsername_taiga();
-            String username_sheets = studentRequest.getUsername_sheets();
-
-            //System.out.print(" sdgfgfdg     "+name+ "   "+);
-
-            StudentDTO sDTO = new StudentDTO(name,project,username_github,username_taiga,username_sheets);
-            studentcontroller.createStudent(sDTO);
-
-        }catch (Exception e){
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping(value = "/LD")
+    public void putLD(@RequestBody List<String> projects){
+        for(String p : projects){
+            studentcontroller.putStudents(p);
         }
+    }
 
-    }*/
-
-
-
-
-
+    @PutMapping(value = "/{id}")
+    public void updateStudent(@PathVariable Integer id, @RequestBody StudentDTO s){
+            studentcontroller.updateStudent(s);
+    }
 
 }

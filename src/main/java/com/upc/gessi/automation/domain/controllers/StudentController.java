@@ -78,15 +78,15 @@ public class StudentController {
         List<StudentDTO> stu = new ArrayList<>();
         for(Student student : students){
             if(student.getProject() == id_proj) {
-                StudentDTO studen = new StudentDTO(student.getName(), student.getUsername_github(), student.getUsername_taiga(), student.getUsername_sheets());
+                StudentDTO studen = new StudentDTO(student.getId(), student.getName(), student.getUsername_github(), student.getUsername_taiga(), student.getUsername_sheets());
                 stu.add(studen);
             }
         }
         return stu;
     }
 
-    public void putStudents(String project, String subject){
-        Project p = projectController.projectRep.findByNameAndSubject(project,subject);
+    public void putStudents(String project){
+        Project p = projectController.projectRep.findByName(project);
         Integer id = p.getId();
         List<Student> students = StudentRep.findAllByProject(id);
         for(Student s :students) {
@@ -135,5 +135,14 @@ public class StudentController {
 
 
         }
+    }
+
+    public void updateStudent(StudentDTO sDTO){
+        Student s = StudentRep.findById(sDTO.getId()).orElse(null);
+        s.setName(sDTO.getName());
+        s.setUsername_github(sDTO.getUsername_github());
+        s.setUsername_taiga(sDTO.getUsername_taiga());
+        s.setUsername_sheets(sDTO.getUsername_sheets());
+        StudentRep.save(s);
     }
 }

@@ -12,12 +12,15 @@ public class SubjectDTO {
 
     private Boolean sheets;
 
-    public SubjectDTO(String name, Boolean github, String token, Boolean taiga, Boolean sheets){
+    private String username;
+
+    public SubjectDTO(String name, Boolean github, String token, Boolean taiga, Boolean sheets,String username){
         this.name = name;
         this.github = github;
         this.token_github = token;
         this.taiga = taiga;
         this.sheets = sheets;
+        this.username = username;
     }
 
     public String getName(){
@@ -31,5 +34,7 @@ public class SubjectDTO {
     public Boolean getTaiga(){ return taiga;}
 
     public Boolean getSheets(){ return sheets;}
+
+    public String getUsername(){ return username;}
 
 }
